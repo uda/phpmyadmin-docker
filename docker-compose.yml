@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=
+    ports:
+      - 8083:80
+    volumes:
+      - /sessions
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: mariadb:10
+    restart: always
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    ports:
+      - "127.10.0.1:3306:3306"
